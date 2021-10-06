@@ -1,0 +1,37 @@
+$board-size: 512px
+$space: 10px
+$border: solid 1px black
+$info-element-height: 150px
+@mixin box()
+  float: left
+  border: $border
+  margin: $space
+
+body
+  background-color: #efefef
+#game-frame
+  width: $board-size * 2 + 5 * $space
+  height: $board-size + 4 * $space + $info-element-height
+  background-color: grey
+
+.board
+  width: $board-size
+  height: $board-size
+  background-color: blue
+  @include box()
+
+#message-bar
+  height: $info-element-height
+  width: $board-size
+  background-color: green
+  @include box()
+
+
+#ships-overview
+  height: $info-element-height
+  width: $board-size
+  background-color: yellow
+  @include box()
+
+.clear
+  clear: both
