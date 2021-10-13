@@ -7,4 +7,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ships';
+  CELL_COUNT = 100
+  getCells(prefix:string){
+    let cells = []
+    for (let i = 0; i<this.CELL_COUNT;i++) {
+      cells.push({'id':prefix+"_"+i})
+    }
+    return cells
+  }
+  onCellClick(cellId:string) {
+  console.log(cellId)
+  }
 }
