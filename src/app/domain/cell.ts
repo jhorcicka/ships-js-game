@@ -1,10 +1,15 @@
 import { Status } from './status';
 
 export class Cell {
-  x: int
-  y: int
+  x: number
+  y: number
   status: Status
 
-  onClick(event): void {}
+  constructor(x: number, y: number, status: Status){
+    this.x = x
+    this.y = y
+    this.status = status
+  }
+  onClick(event:object): void {}
   draw(): void {}
 }

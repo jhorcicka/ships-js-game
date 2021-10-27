@@ -1,5 +1,9 @@
 export class Game {
-  player: Player[]
+  players: Player[]
+
+  constructor(players: Player[]){
+    this.players = players
+  }
 
   start(): void {}
   update(): void {}

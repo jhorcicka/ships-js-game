@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Cell } from './domain/cell'
 
 @Component({
   selector: 'app-root',
