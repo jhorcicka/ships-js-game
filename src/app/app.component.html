@@ -2,10 +2,10 @@
 
 <div id="game-frame">
   <div id="user-board" class="board">
-    <div *ngFor="let userCell of getCells('user')" id="{{userCell.id}}" class="cell" (click)="onCellClick(userCell.id)"></div>
+    <div *ngFor="let userCell of getUserCells()" id="{{userCell.getIndexAsString()}}" class="cell" (click)="onCellClick(userCell.getIndexAsString())"></div>
   </div>
   <div id="ai-board" class="board">
-    <div *ngFor="let aiCell of getCells('ai')" id="{{aiCell.id}}" class="cell" (click)="onCellClick(aiCell.id)"></div>
+    <div *ngFor="let aiCell of getAICells()" id="{{aiCell.getIndexAsString()}}" class="cell" (click)="onCellClick(aiCell.getIndexAsString())"></div>
   </div>
   <div class="clear"></div>
   <div id="message-bar"></div>
