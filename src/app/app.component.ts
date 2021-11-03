@@ -19,6 +19,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit (): void {
 //     console.log("init")
+    this.userCells = this.createCells("user")
+    this.aiCells = this.createCells("ai")
     let userShips = [this.generateShip()]
     let aiShips = [this.generateShip()]
     let game = new Game(
@@ -30,10 +32,10 @@ export class AppComponent implements OnInit {
 
   generateShip() {
     let cells: Cell[] = []
-    cells.push(new Cell(0, ''))
-    cells.push(new Cell(1, ''))
-    cells.push(new Cell(2, ''))
-    cells.push(new Cell(3, ''))
+    cells.push(this.userCells[0])
+    cells.push(this.userCells[1])
+    cells.push(this.userCells[2])
+    cells.push(this.userCells[3])
     return new Ship(cells)
   }
 
@@ -51,15 +53,9 @@ export class AppComponent implements OnInit {
     console.log(cellId)
   }
   getUserCells(): Cell[] {
-    if (this.userCells.length == 0) {
-      this.userCells = this.createCells("user")
-    }
     return this.userCells
   }
   getAICells(): Cell[] {
-    if (this.aiCells.length == 0) {
-      this.aiCells = this.createCells("ai")
-    }
     return this.aiCells
   }
 }
