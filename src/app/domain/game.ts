@@ -1,11 +1,18 @@
-export class Game {
-  players: Player[]
+import { Player } from './player'
 
-  constructor(players: Player[]){
-    this.players = players
+export class Game {
+  userPlayer: Player
+  aiPlayer: Player
+
+  constructor(userPlayer: Player, aiPlayer: Player) {
+    this.userPlayer = userPlayer
+    this.aiPlayer = aiPlayer
   }
 
-  start(): void {}
+  start(): void {
+    this.userPlayer.getBoard().draw()
+    this.aiPlayer.getBoard().draw()
+  }
   update(): void {}
   finish(): void {}
 }

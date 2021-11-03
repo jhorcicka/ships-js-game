@@ -2,7 +2,7 @@
 
 <div id="game-frame">
   <div id="user-board" class="board">
-    <div *ngFor="let userCell of getUserCells()" id="{{userCell.getIndexAsString()}}" class="cell" (click)="onCellClick(userCell.getIndexAsString())"></div>
+    <div *ngFor="let userCell of getUserCells()" id="{{userCell.getIndexAsString()}}" [ngClass]="userCell.cssClass" (click)="onCellClick(userCell.getIndexAsString())"></div>
   </div>
   <div id="ai-board" class="board">
     <div *ngFor="let aiCell of getAICells()" id="{{aiCell.getIndexAsString()}}" class="cell" (click)="onCellClick(aiCell.getIndexAsString())"></div>
