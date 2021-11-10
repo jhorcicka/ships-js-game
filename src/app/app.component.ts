@@ -21,22 +21,11 @@ export class AppComponent implements OnInit {
 //     console.log("init")
     this.userCells = this.createCells("user")
     this.aiCells = this.createCells("ai")
-    let userShips = [this.generateShip()]
-    let aiShips = [this.generateShip()]
     let game = new Game(
-      new Player(PlayerType.USER, new Board(userShips), true),
-      new Player(PlayerType.AI, new Board(aiShips), false)
+      new Player(PlayerType.USER, new Board(this.userCells), true),
+      new Player(PlayerType.AI, new Board(this.aiCells), false)
     )
     game.start()
-  }
-
-  generateShip() {
-    let cells: Cell[] = []
-    cells.push(this.userCells[0])
-    cells.push(this.userCells[1])
-    cells.push(this.userCells[2])
-    cells.push(this.userCells[3])
-    return new Ship(cells)
   }
 
   createCells(prefix:string): Cell[]{
