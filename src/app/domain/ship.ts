@@ -7,7 +7,7 @@ export class Ship {
     this.cells = cells
   }
   draw(): void {
-      console.log('ship draw')
+      console.log('ship draw', this.cells)
       this.cells.forEach(cell=>{cell.draw()})
     }
 }

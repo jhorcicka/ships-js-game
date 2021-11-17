@@ -14,23 +14,33 @@ export class Board {
     this.ships.push(this.generateShip(ShipType.T_SHAPE))
   }
 
+  generateRandomIndex(shipType: ShipType): number {
+       let index: number
+       do {
+        index = Math.floor(Math.random()*100)
+        } while (index % 10 > shipType.getModIndex() || index<shipType.getMinIndex() || index>shipType.getMaxIndex())
+        return index
+    }
+
   generateShip(shipType: ShipType): Ship {
     let cells: Cell[] = []
+    let i = this.generateRandomIndex(shipType)
+    console.log('i=', i)
     if (ShipType.LINE_SHAPE == shipType) {
-         cells.push(this.boardCells[0])
-         cells.push(this.boardCells[1])
-         cells.push(this.boardCells[2])
-         cells.push(this.boardCells[3])
+         cells.push(this.boardCells[i])
+         cells.push(this.boardCells[i+1])
+         cells.push(this.boardCells[i+2])
+         cells.push(this.boardCells[i+3])
     } else if (ShipType.CUBE_SHAPE == shipType) {
-         cells.push(this.boardCells[67])
-         cells.push(this.boardCells[68])
-         cells.push(this.boardCells[77])
-         cells.push(this.boardCells[78])
+         cells.push(this.boardCells[i])
+         cells.push(this.boardCells[i+1])
+         cells.push(this.boardCells[i+10])
+         cells.push(this.boardCells[i+11])
     } else if (ShipType.T_SHAPE == shipType) {
-         cells.push(this.boardCells[35])
-         cells.push(this.boardCells[44])
-         cells.push(this.boardCells[45])
-         cells.push(this.boardCells[46])
+         cells.push(this.boardCells[i])
+         cells.push(this.boardCells[i+1])
+         cells.push(this.boardCells[i+2])
+         cells.push(this.boardCells[i-9])
     }
 
     return new Ship(cells)
