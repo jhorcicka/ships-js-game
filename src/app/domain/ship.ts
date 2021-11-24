@@ -10,4 +10,9 @@ export class Ship {
       console.log('ship draw', this.cells)
       this.cells.forEach(cell=>{cell.draw()})
     }
+
+  getCells(): Cell[] {
+    return this.cells
+  }
 }
+

@@ -18,30 +18,50 @@ export class Board {
        let index: number
        do {
         index = Math.floor(Math.random()*100)
-        } while (index % 10 > shipType.getModIndex() || index<shipType.getMinIndex() || index>shipType.getMaxIndex())
+        } while (this.isNotOnBoard(index, shipType) || this.isInCollision(index, shipType))
         return index
     }
+
+  isInCollision(index: number, shipType: ShipType): boolean {
+    if (this.ships.length == 0) {
+      return false
+    }
+    let collisionArea = shipType.getCollisionArea(index)
+    for (let i=0; i<collisionArea.length; i++){
+     if (this.isOnBoard(index) && this.isCellTaken(collisionArea[i])){
+        return true
+      }
+    }
+    return false
+  }
+
+  isOnBoard(index: number): boolean {
+    return index >= 0 && index <= 99
+  }
+
+  isCellTaken(index: number): boolean {
+     for (let j=0; j<this.ships.length; j++){
+       let shipCells = this.ships[j].getCells()
+        for (let i=0; i<shipCells.length; i++){
+           if (index == shipCells[i].getIndex()){
+             return true
+        }
+       }
+     }
+     return false
+  }
+
+  isNotOnBoard(index: number, shipType: ShipType): boolean {
+   return (index % 10 > shipType.getModIndex() || index<shipType.getMinIndex() || index>shipType.getMaxIndex())
+  }
 
   generateShip(shipType: ShipType): Ship {
     let cells: Cell[] = []
     let i = this.generateRandomIndex(shipType)
     console.log('i=', i)
-    if (ShipType.LINE_SHAPE == shipType) {
-         cells.push(this.boardCells[i])
-         cells.push(this.boardCells[i+1])
-         cells.push(this.boardCells[i+2])
-         cells.push(this.boardCells[i+3])
-    } else if (ShipType.CUBE_SHAPE == shipType) {
-         cells.push(this.boardCells[i])
-         cells.push(this.boardCells[i+1])
-         cells.push(this.boardCells[i+10])
-         cells.push(this.boardCells[i+11])
-    } else if (ShipType.T_SHAPE == shipType) {
-         cells.push(this.boardCells[i])
-         cells.push(this.boardCells[i+1])
-         cells.push(this.boardCells[i+2])
-         cells.push(this.boardCells[i-9])
-    }
+    shipType.getArea(i).forEach(cellIndex=>{
+      cells.push(this.boardCells[cellIndex])
+    })
 
     return new Ship(cells)
   }
