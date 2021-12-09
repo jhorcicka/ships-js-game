@@ -15,4 +15,10 @@ export class Game {
   }
   update(): void {}
   finish(): void {}
+
+  getAIPlayer(): Player {
+    return this.aiPlayer
+  }
+
 }
+

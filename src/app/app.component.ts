@@ -5,6 +5,7 @@ import { Player } from './domain/player'
 import { PlayerType} from './domain/playertype'
 import { Board } from './domain/board'
 import { Ship } from './domain/ship'
+import { Status } from './domain/status'
 
 @Component({
   selector: 'app-root',
@@ -16,16 +17,17 @@ export class AppComponent implements OnInit {
   userCells: Cell[] = []
   aiCells: Cell[] = []
   CELL_COUNT = 100
+  game: Game
 
-  ngOnInit (): void {
-//     console.log("init")
+  ngOnInit (): void {}
+    constructor (){
     this.userCells = this.createCells("user")
     this.aiCells = this.createCells("ai")
-    let game = new Game(
+    this.game = new Game(
       new Player(PlayerType.USER, new Board(this.userCells), true),
       new Player(PlayerType.AI, new Board(this.aiCells), false)
     )
-    game.start()
+    this.game.start()
   }
 
   createCells(prefix:string): Cell[]{
@@ -39,8 +41,17 @@ export class AppComponent implements OnInit {
     return cells
   }
   onCellClick(cellId:string) {
-    console.log(cellId)
+    let idParts = cellId.split('_')
+    if (idParts[0] == 'ai') {
+      let numberIndex = parseInt(idParts[1], 10)
+      let newStatus = this.aiCells[numberIndex].onClick()
+      if (newStatus == Status.SHIP_HIT) {
+        this.game.getAIPlayer().getBoard().checkDestroyedShip(numberIndex)
+      }
+    }
   }
+
+
   getUserCells(): Cell[] {
     return this.userCells
   }

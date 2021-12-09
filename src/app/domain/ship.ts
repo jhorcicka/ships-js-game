@@ -1,4 +1,5 @@
 import { Cell } from './cell'
+import { Status } from './status'
 
 export class Ship {
   cells: Cell[]
@@ -13,6 +14,13 @@ export class Ship {
 
   getCells(): Cell[] {
     return this.cells
+  }
+
+  destroy(){
+    this.cells.forEach(cell=>{
+      cell.setStatus(Status.SHIP_DESTROYED)
+    })
+    this.draw()
   }
 }
 

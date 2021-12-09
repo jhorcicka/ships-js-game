@@ -2,24 +2,52 @@ import { Status } from './status';
 
 export class Cell {
   index: number
-  x: number
-  y: number
   status: Status
   idPrefix: string
   cssClass: string = 'cell'
 
   constructor(index: number, idPrefix: string){
     this.index = index
-    this.x = 0
-    this.y = 0
-    this.status = Status.EMPTY
+    this.status = Status.WATER
     this.idPrefix = idPrefix
   }
 
-  onClick(event:object): void {}
+  onClick(): Status {
+    switch(this.status) {
+      case Status.WATER:
+        this.status = Status.WATER_HIT
+        break
+       case Status.SHIP:
+         this.status = Status.SHIP_HIT
+         break
+       default:
+         break
+    }
+    this.draw()
+    return this.status
+  }
 
   draw(): void {
-    this.cssClass += ' ship'
+    this.cssClass = 'cell'
+    switch(this.status) {
+      case Status.WATER:
+        this.cssClass += ''
+        break
+      case Status.WATER_HIT:
+        this.cssClass += ' water-hit'
+        break
+      case Status.SHIP:
+        this.cssClass += ' ship'
+        break
+      case Status.SHIP_HIT:
+        this.cssClass += ' ship-hit'
+        break
+      case Status.SHIP_DESTROYED:
+        this.cssClass += ' ship-destroyed'
+        break
+      default:
+        break
+      }
     console.log('cell draw', this.cssClass)
   }
 
@@ -38,7 +66,14 @@ export class Cell {
   getClass(): string {
     console.log('get class')
     return this.cssClass
+  }
 
+  setStatus(status: Status): void {
+    this.status = status
+  }
+
+  getStatus(): Status {
+    return this.status
   }
 
 }

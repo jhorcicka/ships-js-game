@@ -1,6 +1,7 @@
 import { Ship } from './ship'
 import { ShipType } from './shiptype'
 import { Cell } from './cell'
+import { Status } from './status'
 
 export class Board {
   ships: Ship[]
@@ -60,11 +61,34 @@ export class Board {
     let i = this.generateRandomIndex(shipType)
     console.log('i=', i)
     shipType.getArea(i).forEach(cellIndex=>{
-      cells.push(this.boardCells[cellIndex])
+      let shipCell = this.boardCells[cellIndex]
+      shipCell.setStatus(Status.SHIP)
+      cells.push(shipCell)
     })
 
     return new Ship(cells)
   }
+
+  checkDestroyedShip(index: number) {
+    this.ships.forEach((ship:Ship)=>{
+      ship.getCells().forEach((cell:Cell)=>{
+        if (index == cell.getIndex()){
+          let destroyed = true
+          ship.getCells().forEach((cell2:Cell)=>{
+          console.log(index, cell2, Status.SHIP_HIT)
+            if (cell2.getStatus() != Status.SHIP_HIT) {
+              console.log('if')
+              destroyed = false
+              return
+            }
+          })
+          if (destroyed) {
+            ship.destroy()
+          }
+        }
+      })
+      })
+    }
 
   draw(): void {
     console.log('board draw')
