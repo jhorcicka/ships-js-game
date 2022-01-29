@@ -1,5 +1,5 @@
 
-
+<div id="victory-message" [ngClass]="gameStatus"></div>
 <div id="game-frame">
   <div id="user-board" class="board">
     <div *ngFor="let userCell of getUserCells()" id="{{userCell.getIndexAsString()}}" [ngClass]="userCell.cssClass" (click)="onCellClick(userCell.getIndexAsString())"></div>
@@ -8,6 +8,6 @@
     <div *ngFor="let aiCell of getAICells()" id="{{aiCell.getIndexAsString()}}" [ngClass]="aiCell.cssClass" (click)="onCellClick(aiCell.getIndexAsString())"></div>
   </div>
   <div class="clear"></div>
-  <div id="message-bar"></div>
+  <div id="message-bar"><ul><li *ngFor="let message of messages">{{message}}</li></ul></div>
   <div id="ships-overview"></div>
 </div>

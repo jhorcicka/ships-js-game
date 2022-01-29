@@ -7,11 +7,15 @@ $info-element-height: 150px
   border: $border
   margin: $space
 
-body
+html, body
   background-color: #efefef
+  height: 100%
+  width: 100%
+
 #game-frame
   width: $board-size * 2 + 5 * $space
   height: $board-size + 4 * $space + $info-element-height
+  z-index: 0
   background-color: grey
 
 .board
@@ -24,6 +28,7 @@ body
   height: $info-element-height
   width: $board-size
   background-color: green
+  overflow: auto
   @include box()
 
 
@@ -53,3 +58,23 @@ body
 
 .ship-destroyed
   background-color: black
+
+.ship-hidden
+  background-color: blue
+
+#victory-message
+  width: 100%
+  height: 100%
+  position: absolute
+  top: 0px
+  left: 0px
+  z-index: 10
+  background-color: rgba(34, 10, 5, 0.5)
+  background-image: url("/assets/victory.jpg")
+  background-repeat: no-repeat
+  background-position: center
+  color: black
+  visibility: hidden
+
+.visible
+  visibility: visible !important

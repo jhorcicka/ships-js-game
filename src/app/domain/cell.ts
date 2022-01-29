@@ -17,11 +17,11 @@ export class Cell {
       case Status.WATER:
         this.status = Status.WATER_HIT
         break
-       case Status.SHIP:
-         this.status = Status.SHIP_HIT
-         break
-       default:
-         break
+      case Status.SHIP:
+        this.status = Status.SHIP_HIT
+        break
+      default:
+        break
     }
     this.draw()
     return this.status
@@ -37,7 +37,7 @@ export class Cell {
         this.cssClass += ' water-hit'
         break
       case Status.SHIP:
-        this.cssClass += ' ship'
+        this.cssClass += this.idPrefix == "ai" ? ' ship-hidden': " ship"
         break
       case Status.SHIP_HIT:
         this.cssClass += ' ship-hit'

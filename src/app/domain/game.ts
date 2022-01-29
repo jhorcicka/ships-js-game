@@ -20,5 +20,9 @@ export class Game {
     return this.aiPlayer
   }
 
+  getUserPlayer(): Player {
+    return this.userPlayer
+  }
+
 }
 

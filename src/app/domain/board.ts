@@ -6,6 +6,7 @@ import { Status } from './status'
 export class Board {
   ships: Ship[]
   boardCells: Cell[]
+  numberOfDestroyedShips: number = 0
 
   constructor(cells: Cell[]){
     this.ships = []
@@ -15,13 +16,21 @@ export class Board {
     this.ships.push(this.generateShip(ShipType.T_SHAPE))
   }
 
-  generateRandomIndex(shipType: ShipType): number {
-       let index: number
-       do {
-        index = Math.floor(Math.random()*100)
-        } while (this.isNotOnBoard(index, shipType) || this.isInCollision(index, shipType))
-        return index
-    }
+  generateRandomShipIndex(shipType: ShipType): number {
+    let index: number
+    do {
+      index = Math.floor(Math.random()*100)
+    } while (this.isNotOnBoard(index, shipType) || this.isInCollision(index, shipType))
+    return index
+  }
+
+  generateRandomIndex(): number {
+    let index: number
+    do {
+      index = Math.floor(Math.random()*100)
+    } while (!this.isOnBoard(index))
+    return index
+  }
 
   isInCollision(index: number, shipType: ShipType): boolean {
     if (this.ships.length == 0) {
@@ -58,7 +67,7 @@ export class Board {
 
   generateShip(shipType: ShipType): Ship {
     let cells: Cell[] = []
-    let i = this.generateRandomIndex(shipType)
+    let i = this.generateRandomShipIndex(shipType)
     console.log('i=', i)
     shipType.getArea(i).forEach(cellIndex=>{
       let shipCell = this.boardCells[cellIndex]
@@ -75,20 +84,23 @@ export class Board {
         if (index == cell.getIndex()){
           let destroyed = true
           ship.getCells().forEach((cell2:Cell)=>{
-          console.log(index, cell2, Status.SHIP_HIT)
             if (cell2.getStatus() != Status.SHIP_HIT) {
-              console.log('if')
               destroyed = false
               return
             }
           })
           if (destroyed) {
             ship.destroy()
+            this.numberOfDestroyedShips += 1
           }
         }
       })
-      })
-    }
+    })
+  }
+
+  checkAllShipsDestroyed(): boolean {
+    return this.numberOfDestroyedShips == this.ships.length
+  }
 
   draw(): void {
     console.log('board draw')
